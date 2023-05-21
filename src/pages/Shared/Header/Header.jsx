@@ -1,13 +1,28 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react'; 
+import React, { useContext } from 'react'; 
 import logo from '../../../assets/logo.svg'
 import {Link} from 'react-router-dom'
+import { AuthContext } from '../../../Provider/AuthProvider';
 
 const Header = () => {
 
+  const {users, logOut} = useContext(AuthContext)
+  const handleLogOut = () => {
+logOut()
+.then(() => {})
+.catch(console.error())
+  }
+
   const navber = <>
-  <li><Link>Home</Link></li>
-  <li><Link>About</Link></li>
+  <li><Link to='/'>Home</Link></li>
+  <li><Link to='/about'>About</Link></li>
+  {users?.email?
+  <>
+  <li><button onClick={handleLogOut}>Log Out</button></li>
+  <li><Link to='/bookings'>My Bookings</Link></li></>
+  :
+  <li><Link to='/login'>Login</Link></li>
+  }
   </>
   return (
     <div className="navbar bg-base-100 mb-3">

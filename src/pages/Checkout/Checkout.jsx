@@ -24,7 +24,8 @@ const Checkout = () => {
             date,
             _id,
             title,
-            img
+            img,
+            price
         
         }
         console.log(order);
