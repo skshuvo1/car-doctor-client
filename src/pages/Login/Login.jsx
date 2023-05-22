@@ -7,10 +7,19 @@ import {useLocation, useNavigate} from 'react-router-dom'
 const Login = () => {
 
   const {signIn} = useContext(AuthContext);
+  const {googleSignIn} = useContext(AuthContext)
   const location = useLocation();
 const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
   
+
+  const handleGoogle = () => {
+googleSignIn()
+.then(result => {
+  console.log(result.user);
+})
+.catch(error => console.error(error))
+  }
 
     const handleLogin = (e) => {
       e.preventDefault();
@@ -21,25 +30,12 @@ const navigate = useNavigate();
       signIn(email, password)
       .then(result => {
       const user = result.user;
-      const loggedUser = {
-        email: user.email
-      }
-      console.log(loggedUser);
+      
+      navigate(from, {replace: true})
+      console.log(user);
       
 
-    fetch('http://localhost:3000/jwt', {
-      method:'POST',
-      headers:{
-        'content-type': 'application/json'
-      },
-      body:JSON.stringify(loggedUser)
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      localStorage.setItem('car-token', data.token)
-      navigate(from, {replace: true})
-    })
+   
       })
       .catch(error => console.error(error))
     }
@@ -77,6 +73,16 @@ const navigate = useNavigate();
               </form>
               <h3>New to Car Doctors? <Link to = '/signup' className= 'text-red-400'>Sign Up</Link></h3>
             </div>
+
+            <div className="flex flex-col w-full border-opacity-50">
+  
+  <div className="divider">OR</div>
+  <div className="grid h-20 card bg-base-300 rounded-box place-items-center">
+  <button onClick={handleGoogle} className="btn btn-square">
+  G
+</button>
+  </div>
+</div>
           </div>
         </div>
       </div>
