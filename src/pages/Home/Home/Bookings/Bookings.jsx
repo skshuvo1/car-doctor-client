@@ -13,7 +13,12 @@ const Bookings = () => {
     const url = `http://localhost:3000/bookings/?email=${users.email}`;
     useEffect(() => {
         
-        fetch(url)
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('car-token')}`
+            }
+        })
             .then(res => res.json())
             .then(data => setBookings(data))
     }, [url])

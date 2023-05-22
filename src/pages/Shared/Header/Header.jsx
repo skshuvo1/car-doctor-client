@@ -9,7 +9,9 @@ const Header = () => {
   const {users, logOut} = useContext(AuthContext)
   const handleLogOut = () => {
 logOut()
-.then(() => {})
+.then(() => {
+  localStorage.removeItem('car-token')
+})
 .catch(console.error())
   }
 
